@@ -16,7 +16,7 @@ import { z } from "zod";
 export const userRoleEnum = pgEnum("user_role", [
   "farmer",
   "mill",
-  "cooperative", 
+  "cooperative",  
   "exporter",
   "roaster",
   "retailer"
@@ -24,7 +24,7 @@ export const userRoleEnum = pgEnum("user_role", [
 
 export const lotStatusEnum = pgEnum("lot_status", [
   "harvested",
-  "wet_processing", 
+  "wet_processing",  
   "dry_processing",
   "quality_testing",
   "ready_for_auction",
@@ -36,16 +36,10 @@ export const lotStatusEnum = pgEnum("lot_status", [
 
 export const gradeEnum = pgEnum("grade", [
   "AA",
-  "AB", 
+  "AB",  
   "C",
   "PB",
   "E"
-]);
-
-export const processingMethodEnum = pgEnum("processing_method", [
-  "wet",
-  "dry", 
-  "honey"
 ]);
 
 export const paymentStatusEnum = pgEnum("payment_status", [
@@ -92,7 +86,8 @@ export const coffeeLots = pgTable("coffee_lots", {
   farmerId: varchar("farmer_id").notNull(),
   quantity: decimal("quantity", { precision: 10, scale: 2 }).notNull(),
   grade: gradeEnum("grade"),
-  processingMethod: processingMethodEnum("processing_method").notNull(),
+  // Corrected line: changed from enum to varchar
+  processingMethod: varchar("processing_method", { length: 255 }).notNull(),
   status: lotStatusEnum("status").default("harvested"),
   qrCode: text("qr_code"),
   harvestDate: timestamp("harvest_date").defaultNow(),
